@@ -94,9 +94,9 @@
                             <span><%=curStaff.getRole()%></span>
                         </div>
                     </div>
-                    <%if(isStaff){%>    
+                     <%if(isStaff){%>    
                     <div class="navbar-nav w-100  text-light">
-                        <a href="staff?event=send-to-reservations-list" class="nav-item nav-link active"
+                        <a href="staff?event=send-to-reservations-list" class="nav-item nav-link"
                            ><i class="fas fa-list-alt"></i>Reservations List</a
                         >
                     </div>  
@@ -105,15 +105,30 @@
                            ><i class="far fa-check-square"></i>Medical examination</a
                         >
                     </div>
+                    <div class="navbar-nav w-100  text-light">
+                        <a href="staff?event=send-to-schedules" class="nav-item nav-link">
+                          <i class="bi bi-calendar3"></i>Schedules
+                        </a>
+                    </div>
                     <%}%>
                     <%if(isManager){%>
+                    <div class="navbar-nav w-100 text-light">
+                        <a href="user?action=search" class="nav-item nav-link"
+                           ><i class="bi bi-people-fill"></i>User</a
+                        >
+                    </div>
+                    <div class="navbar-nav w-100 text-light">
+                        <a href="staffschedule?action=send-to-manage" class="nav-item nav-link"
+                           ><i class="bi bi-calendar-check"></i>Staff Schedule</a
+                        >
+                    </div>
                     <div class="navbar-nav w-100  text-light">
                         <a href="staff?event=send-to-medical-examination-manage" class="nav-item nav-link"
                            ><i class="far fa-check-square"></i>Medical examination</a
                         >
                     </div>
                     <div class="navbar-nav w-100  text-light">
-                        <a href="reservationcontactmanager?event=reservation-list" class="nav-item nav-link"
+                        <a href="reservationcontactmanager?event=reservation-list" class="nav-item nav-link active"
                            ><i class="fas fa-list-alt"></i>Reservations Manager</a
                         >
                     </div>
@@ -128,8 +143,13 @@
                         >
                     </div>
                     <div class="navbar-nav w-100 text-light">
-                        <a href="postManage" class="nav-item nav-link active"
+                        <a href="postManage" class="nav-item nav-link"
                            ><i class="bi bi-file-earmark-post"></i>Post</a
+                        >
+                    </div>
+                    <div class="navbar-nav w-100 text-light">
+                        <a href="slider?action=all" class="nav-item nav-link"
+                           ><i class="bi bi-image-fill"></i>Slider</a
                         >
                     </div>
                     <%}%>

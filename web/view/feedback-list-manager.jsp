@@ -56,10 +56,14 @@
        String email = (String) session.getAttribute("email");
        StaffDAO staffDAO = new StaffDAO();
        Staff curStaff = staffDAO.getStaffByStaffEmail(email);
+       boolean isManager = false;
+       boolean isStaff = false;
         %>
 
         <div class="container-fluid position-relative bg-white d-flex p-0">
-            <%if(curStaff!=null){%>
+            <%if(curStaff!=null){
+            if(curStaff.getRole().equals("manager")) isManager=true;
+            if(curStaff.getRole().equals("doctor")||curStaff.getRole().equals("nurse")) isStaff=true;%>
             <!-- Sidebar Start -->
             <div class="sidebar pe-4 pb-3">
                 <nav class="navbar navbar-light">
@@ -85,9 +89,32 @@
                             <span><%=curStaff.getRole()%></span>
                         </div>
                     </div>
+                     <%if(isStaff){%>    
+                    <div class="navbar-nav w-100  text-light">
+                        <a href="staff?event=send-to-reservations-list" class="nav-item nav-link"
+                           ><i class="fas fa-list-alt"></i>Reservations List</a
+                        >
+                    </div>  
+                    <div class="navbar-nav w-100  text-light">
+                        <a href="staff?event=send-to-medical-examination" class="nav-item nav-link"
+                           ><i class="far fa-check-square"></i>Medical examination</a
+                        >
+                    </div>
+                    <div class="navbar-nav w-100  text-light">
+                        <a href="staff?event=send-to-schedules" class="nav-item nav-link">
+                          <i class="bi bi-calendar3"></i>Schedules
+                        </a>
+                    </div>
+                    <%}%>
+                    <%if(isManager){%>
                     <div class="navbar-nav w-100 text-light">
                         <a href="user?action=search" class="nav-item nav-link"
                            ><i class="bi bi-people-fill"></i>User</a
+                        >
+                    </div>
+                    <div class="navbar-nav w-100 text-light">
+                        <a href="staffschedule?action=send-to-manage" class="nav-item nav-link"
+                           ><i class="bi bi-calendar-check"></i>Staff Schedule</a
                         >
                     </div>
                     <div class="navbar-nav w-100  text-light">
@@ -101,7 +128,7 @@
                         >
                     </div>
                     <div class="navbar-nav w-100 text-light">
-                        <a href="feedback" class="nav-item nav-link"
+                        <a href="feedback" class="nav-item nav-link active"
                            ><i class="far fa-file-alt"></i>Feedback</a
                         >
                     </div>
@@ -111,10 +138,16 @@
                         >
                     </div>
                     <div class="navbar-nav w-100 text-light">
+                        <a href="postManage" class="nav-item nav-link"
+                           ><i class="bi bi-file-earmark-post"></i>Post</a
+                        >
+                    </div>
+                    <div class="navbar-nav w-100 text-light">
                         <a href="slider?action=all" class="nav-item nav-link"
                            ><i class="bi bi-image-fill"></i>Slider</a
                         >
                     </div>
+                    <%}%>
                 </nav>
             </div>
             <!-- Sidebar End -->
@@ -222,9 +255,9 @@
                                     <c:otherwise>  
 
                                         <div class="col-md-9">
-                                            <form class="d-flex" action="feedback?event=${fillevent}&${fillparameter}=${fill}" method="POST">
+                                            <form class="d-flex" style="width: 50%; margin-left: 430px; margin-top: 20px" action="feedback?event=${fillevent}&${fillparameter}=${fill}" method="POST">
                                                 <input class="form-control me-2" type="search" name="search" value="" placeholder="Search" aria-label="Search">
-                                                <button style="background-color: black" class="btn btn-primary rounded-pill" type="submit">Search</button>
+                                                <button class="btn btn-primary rounded-pill" type="submit">Search</button>
                                             </form>
                                         </div>
                                     </c:otherwise>

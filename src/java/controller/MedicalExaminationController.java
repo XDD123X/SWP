@@ -9,6 +9,7 @@ import Database.MedicalExaminationDAO;
 import Database.ReservationDAO;
 import Database.ServiceDAO;
 import Database.StaffDAO;
+import Database.UserDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -21,9 +22,11 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.logging.Logger;
 import model.Children;
+import model.Mail;
 import model.MedicalExamination;
 import model.Reservation;
 import model.Staff;
+import model.User;
 
 /**
  *
@@ -444,12 +447,17 @@ public class MedicalExaminationController extends HttpServlet {
         PrintWriter out = response.getWriter();
         int serviceId = Integer.parseInt(request.getParameter("service") + "");
         String reserdId = request.getParameter("reserdId") + "";
+        UserDAO userdao = new UserDAO();
+        User user = null;
         if (!reserdId.equals("null")) {
             try {
                 ReservationDAO reservationDAO = new ReservationDAO();
                 Reservation reservation = reservationDAO.getReservationByID(Integer.parseInt(reserdId));
                 reservation.setStatus("done");
                 reservationDAO.update(reservation);
+                user = userdao.getUserByID(reservationDAO.getReservationByID(Integer.parseInt(reserdId)).getUserID());
+                Mail.sendEmail(user.getEmail(), "THANK TO USE SERVICE", "Thank you for using our service\n"
+                        + "Please give us feedback about the service by clicking on feedback in the header on the homepage on the website");
             } catch (Exception e) {
             }
         }
